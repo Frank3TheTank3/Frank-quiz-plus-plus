@@ -1,4 +1,160 @@
-.body {
-    background-color: aquamarine;
-    color: darkslategray;
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap');
+
+td{
+    min-width: 200px;
+    width: 250px;
+}
+
+tr:nth-child(even) {
+    background-color: #4C8BF5;
+    color: white;
+}
+
+body {
+
+    line-height: 1.8;
+    color: black;
+    font-size: 18px;
+    font-family: 'Raleway', sans-serif;
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: black;
+
+}
+
+h1{
+    color: black;
+    text-shadow: 5px 5px #ce6605;
+}
+
+.lowercase {
+
+    text-transform: lowercase;
+}
+
+.title-sm {
+    font-size: 14px;
+    letter-spacing: 1px;
+
+}
+
+a {
+    font-weight: 700;
+    transition: all 0.4s ease;
+}
+
+p {
+
+    font-size: 20px;
+}
+
+
+.displayimage {
+
+    height: 400px;
+}
+
+.displayimage {
+
+    height: 300px;
+}
+
+img {
+
+    width: 100%;
+
+}
+
+small {
+
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+
+
+}
+
+#navcontainer {
+
+  
+    background-image: url(imgs/nav.jpg);
+    opacity: 0.8;
+    border-radius: 10px;
+    height: 100px;
+}
+
+.navbar {
+
+
+    background-repeat: space;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-position-x: right;
+    background-color: skyblue;
+}
+
+.logo-text {
+    font-size: 22px;
+    text-transform: uppercase;
+    color: white;
+}
+
+
+
+.navbar .nav-link {
+
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+
+    color: white;
+}
+
+#home {
+    min-height: 50vh;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background: linear-gradient(90deg, rgba(172,172,172,1) 0%, rgba(121,70,9,1) 25%, 
+    rgba(175,67,39,1) 34%, rgba(170,108,25,1) 57%, rgba(164,146,114,1) 71%, rgba(198,198,198,1) 100%);
+    /*background-image: url(imgs/grass.jpg);
+    background-image: linear-gradient(to bottom right, red, yellow);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(144,205,255,1) 28%,
+     rgba(140,242,117,1) 71%, rgba(187,133,5,1) 100%);*/
+    display: flex;
+    align-items: center;
+
+
+}
+
+#home h1 {
+    font-weight: 700;
+
+
+}
+
+#home p {
+
+    max-width: 550px;
+    margin: 25px auto;
 }

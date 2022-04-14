@@ -127,7 +127,6 @@ if (isset($_POST['login'])) {
             $_SESSION['WrongAnswers'] = 0;
             $_SESSION['Q' . $questNum] = '';
             
-            echo '<script>toggleUserDisplay()</script>';
             require_once('questions.php');
             loadQuestion();
             loadAnswer();

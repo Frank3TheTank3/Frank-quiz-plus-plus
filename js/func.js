@@ -1,9 +1,6 @@
 function toggleUserDisplay()
 {
-    var element = document.getElementById('adduser');
-    element.classList.add('d-none');
-
-    var element = document.getElementById('loguser');
+    var element = document.getElementById('logreg');
     element.classList.add('d-none');
 
 

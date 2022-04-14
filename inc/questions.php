@@ -8,7 +8,7 @@
 function loadQuestion()
 
 {
-    
+    echo '<script>toggleUserDisplay();</script>';
     echo "<div id='questions' class='rounded-pill d-flex align-items-center justify-content-center container
     p-5 my-5 bg-dark text-white'>";
     echo "Question Number: " . $_SESSION['QuestionNumber'] . "<br>";

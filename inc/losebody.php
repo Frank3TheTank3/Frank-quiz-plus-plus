@@ -6,6 +6,7 @@
         <img style="width:200px;" src="imgs/book.jpg" alt="" class="navbar-brand logo-image"></th>
         <p class="h1 text-black">Frank Quiz ++</p>
 
+         <!--- Navigation container--->
         <div id="navcontainer" class="container">
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,20 +29,15 @@
                     </li>
 
                 </ul>
+                 <!--- Logout Button --->
                 <form method="post">
                     <input class='btn btn-primary m-4' type='submit' name='reset' id='reset' value='Logout'></input>
                 </form>
-
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success bg-white" type="submit">Search</button>
-                </form>
-
             </div>
         </div>
     </nav>
 
-
+ <!--- You lose message --->
     <section id="home">
 
         <div class="container text-center">

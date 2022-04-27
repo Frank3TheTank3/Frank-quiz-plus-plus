@@ -1,6 +1,12 @@
 <?php
-
+//////////////////////////////////////////////////////////////////////////
 /*Functions for showing, adding & logging-in Users to the MySQL Database*/
+//////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////
+/////*LOGOUT & REGISTER BUTTONS*///////////
+///////////////////////////////////////////
+
 /*Close Databases & User Log-Out*/
 if (isset($_POST['reset'])) {
     unset($_POST);
@@ -14,6 +20,10 @@ if (isset($_POST['goUsers'])) {
 
     showAllUsers();
 }
+
+////////////////////////////////
+/////*SHOW ALL USERS*///////////
+///////////////////////////////
 
 /*Show User Database Function*/
 function showAllUsers()
@@ -30,20 +40,20 @@ function showAllUsers()
     }
 }
 
-/////*ADD USER*/////
+/////////////////////////////
+/////*REIGSTER NEW USER*/////
+////////////////////////////
 
 /*Add new User to Database*/
 if (isset($_POST['adduser'])) {
-    /*Check for empty fields*/
 
+    /*Check for empty fields*/
     if (!empty($_POST['username'])) {
         $UserName = $_POST['username'];
     } else {
         echo 'Username Missing';
         echo "<script>alert('Titel Missing')</script> ";
     }
-
-
     if (!empty($_POST['userpw'])) {
         $UserPW = $_POST['userpw'];
     } else {
@@ -55,7 +65,6 @@ if (isset($_POST['adduser'])) {
         $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
 
         //Get last userID in Table
-
         $stmt = $pdo->query("SELECT * FROM Users ORDER BY UserID DESC LIMIT 1");
         $user = $stmt->fetch();
         $userpassID = $user['UserID'];
@@ -80,6 +89,10 @@ if (isset($_POST['adduser'])) {
     }
 }
 
+///////////////////////
+/////*LOGIN USER*/////
+//////////////////////
+
 //Login User
 if (isset($_POST['login'])) {
 
@@ -99,7 +112,7 @@ if (isset($_POST['login'])) {
     }
 
 
-    //Get last ID in Table
+    /*Select UserName from Users Database*/
     $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
     $stmt = $pdo->query("SELECT * FROM Users WHERE UserName = '$UserName'");
     $userLoginData = $stmt->fetch();
@@ -110,17 +123,16 @@ if (isset($_POST['login'])) {
 
         $userpassName = $userLoginData['UserName'];
         $userpassPW = $userLoginData['UserPW'];
-
-
-
         $publisher_id = $pdo->lastInsertId();
 
+        //Username Check
         if ($userpassPW == $UserPW) {
 
             echo '<div class="container  p-5 my-5 bg-primary text-white ">';
             echo '<h1 class="text-center text-white ">Welcome ' . $userpassName . ' </h1>';
             echo '</div>';
 
+            //Load Main Variables & Show Difficulties
             $_SESSION['QuestionNumber'] = 0;
             $questNum = $_SESSION['QuestionNumber'];
             $_SESSION['Correct'] = '';
@@ -132,8 +144,6 @@ if (isset($_POST['login'])) {
             {
             loadDifficulty();
             }
-            
-            //showQuestionsAndAnswers();
             
         } else {
             echo "Wrong Password ";

@@ -1,7 +1,7 @@
 <?php
 
 
-
+//Create Timebar with correct time delay for the chosen difficulty
 function createTimebar()
 {
 

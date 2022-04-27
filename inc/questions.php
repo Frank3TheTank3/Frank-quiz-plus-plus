@@ -1,10 +1,15 @@
 <?php
 
-
+////////////////////////////////////////////////////////////////////
 /*Functions for showing and adding Questions to the MySQL Database*/
+////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////
+/////*LOAD DIFFICULTY*///////
+////////////////////////////
 
 /*Start PDO & get query Result for Questions & Answers*/
-
 function loadDifficulty()
 {
     echo '<script>toggleTimeBar()</script>';
@@ -22,11 +27,15 @@ function loadDifficulty()
     echo "</form>";
 }
 
+/////////////////////////////
+/////*LOAD QUESTION*////////
+////////////////////////////
 
-
+/*Start PDO & get query Result for Questions*/
 function loadQuestion()
 
 {
+    //Toggle User login & Create Timebar
     echo '<script>toggleUserDisplay();</script>';
     createTimebar();
    
@@ -55,6 +64,11 @@ function loadQuestion()
     echo "<script> onTimerEnd(); </script>";
 }
 
+/////////////////////////////
+/////*LOAD STATS*///////////
+////////////////////////////
+
+//Load Correct & Wrong Answer Stats
 function loadStats()
 {
 
@@ -66,12 +80,14 @@ function loadStats()
     echo "</div>";
 }
 
+/////////////////////////////
+/////*LOAD ANSWER*///////////
+////////////////////////////
 
+//Load Answers to Question Num as form inputs
 function loadAnswer()
 
 {
-
-
     $answerNum = $_SESSION['QuestionNumber'];
     $pdo_Answer = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
     $sql_Answer = "SELECT * FROM Answers WHERE Answers.QuestionIndex = $answerNum";
@@ -97,7 +113,6 @@ function loadAnswer()
 
         if ($row['CorrectAnswer']) {
             $_SESSION['Correct'] = $row['CorrectAnswer'];
-            //echo $_SESSION['Correct'];
         }
     }
     echo "</form>";
@@ -108,48 +123,50 @@ function loadAnswer()
     </style>";
 }
 
+/////////////////////////////
+/////*SHOW RESULTS*//////////
+////////////////////////////
+
 function showQuestionsAndAnswers()
 {
     echo '<script>toggleUserDisplay();</script>';
     showScore();
     $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
     $sql3 = "SELECT * FROM Questions, Answers WHERE Questions.QuestionIndex = Answers.QuestionIndex";
-    /*Open Questions Database Button*/
     echo "<div class='d-flex m-4 justify-content-center'>";
     echo "<table width='fit-content' ><tr>";
     echo '<th>Question Number</th>';
-    //echo '<th>Question Status</th>';
     echo '<th>Question</th>';
-    /*
-    echo '<th>Answer A</th>';
-    echo '<th>Answer B</th>';
-    echo '<th>Answer C</th>';
-    echo '<th>Answer D</th>';
-    */
+  
     echo '<th>Given Answer</th>';
     echo '<th>Correct Answer</th>';
     $givenQuestIndex = 1;
     foreach ($pdo->query($sql3) as $row) {
         echo '<tr>';
         echo '<td>' . 'No. ' . $row['QuestionIndex'] . '</td>';
-        //echo '<td>' . $row['Status'] . '</td>';
         echo '<td>' . $row['Question'] . '</td>';
-        /*
+        echo '<td>' . $_SESSION['Q' . $givenQuestIndex] . '</td>';
+        echo '<td>' . $row['CorrectAnswer'] . '</td>';
+        echo '</tr>';
+        $givenQuestIndex++;
+    }
+    echo '</div>';
+
+    /* Further Stats from the Answer Database - not in use
+        echo '<td>' . $row['Status'] . '</td>';
         echo '<td>' . $row['Answer_A'] . '</td>';
         echo '<td>' . $row['Answer_B'] . '</td>';
         echo '<td>' . $row['Answer_C'] . '</td>';
         echo '<td>' . $row['Answer_D'] . '</td>';
         */
-        echo '<td>' . $_SESSION['Q' . $givenQuestIndex] . '</td>';
-        echo '<td>' . $row['CorrectAnswer'] . '</td>';
-        echo '</tr>';
-
-        $givenQuestIndex++;
-    }
-    echo '</div>';
     
 }
 
+/////////////////////////////
+/////*LOAD SCOREs*//////////
+////////////////////////////
+
+//Show final score at the end of the quiz
 function showScore()
 {
 

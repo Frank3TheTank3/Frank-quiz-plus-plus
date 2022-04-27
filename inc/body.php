@@ -1,4 +1,6 @@
 <body data-bs-spy="scroll" data-bs-target=".navbar">
+
+    <!--- Main Navigation --->
     <nav class="navbar navbar-expand-lg navbar-dark bg-white">
 
         <!--- Header Table for Logo & Name --->
@@ -28,6 +30,8 @@
                     </li>
 
                 </ul>
+
+                <!--- Logout Button --->
                 <form method="post">
                     <input class='btn btn-primary m-4' type='submit' name='reset' id='reset' value='Logout'></input>
                 </form>
@@ -37,11 +41,13 @@
             </div>
         </div>
     </nav>
+
+    <!--- Difficulty Settings --->
     <?php
     include('difficulty.php');
-    
     ?>
 
+    <!--- Timebar style settings (not working in style.css so directly added to body.php--->
     <style>
         .round-time-bar div {
             height: 50px;
@@ -49,9 +55,6 @@
             animation: roundtime calc(var(--duration) * 1s) linear forwards;
             transform-origin: left center;
         }
-
-
-
 
         @keyframes roundtime {
             to {
@@ -61,6 +64,7 @@
         }
     </style>
 
+    <!--- Home Section with register & login forms --->
     <section id="home">
 
         <div class="container text-center">
@@ -97,12 +101,12 @@
                     </section>
 
 
-
+                    <!--- Main includes for questions / user & submit checker --->
                     <?php
                     include('questions.php');
                     include('user.php');
                     include('checker.php');
-                    
+
                     ?>
                 </div>
 
@@ -118,5 +122,5 @@
 
     </section>
 
-    
+
 </body>

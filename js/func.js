@@ -36,6 +36,7 @@ function backToMenu()
 {
     window.history.replaceState( null, null, 'index.php');
     window.location = window.location.href;
+    location.reload(true);
     //document.write(' <?php loadDifficulty(); ?> ');
 
 }

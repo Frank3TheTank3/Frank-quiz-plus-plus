@@ -50,6 +50,7 @@ if (isset($_POST['adduser'])) {
     /*Check for empty fields*/
     if (!empty($_POST['username'])) {
         $UserName = $_POST['username'];
+        $_SESSION['CurrentUserName'] =  $UserName;
     } else {
         echo 'Username Missing';
         echo "<script>alert('Titel Missing')</script> ";
@@ -67,11 +68,12 @@ if (isset($_POST['adduser'])) {
         //Get last userID in Table
         $stmt = $pdo->query("SELECT * FROM Users ORDER BY UserID DESC LIMIT 1");
         $user = $stmt->fetch();
-        $userpassID = $user['UserID'];
-
+        $_SESSION['CurrentUserID'] = $user['UserID'];
+       
 
         //Create Insert with new user
-        $sql = 'INSERT INTO Users(UserID, UserName, UserPW, UserStatus) VALUES(:userid, :username, :userpw, :status)';
+        $sql = 'INSERT INTO Users(UserID, UserName, UserPW, UserStatus, NumberTries, Highscore) 
+        VALUES(:userid, :username, :userpw, :status, :numbertries, :highscore)';
 
         $statement = $pdo->prepare($sql);
 
@@ -79,7 +81,9 @@ if (isset($_POST['adduser'])) {
             ':userid' => $pdo->lastInsertId(),
             ':username' => $UserName,
             ':userpw' => $UserPW,
-            ':status' => 'open'
+            ':status' => 'open',
+            ':numertries' => 0,
+            ':highscore' => 0
         ]);
 
         $publisher_id = $pdo->lastInsertId();
@@ -87,6 +91,29 @@ if (isset($_POST['adduser'])) {
         $_SESSION['loggedin'] = true;
         echo 'The User ' . $UserName . ' was added to the database';
     }
+}
+
+function addTry()
+{
+    $currentUserName = $_SESSION['CurrentUserName'];
+    $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
+
+    //Get last userID in Table
+    /*
+    $stmt = $pdo->query("SELECT * FROM Users WHERE UserName = $currentUserName");
+    $user = $stmt->fetch();
+    $currentNumberOfTries = $user['NumberTries'] +1;
+    echo $currentNumberOfTries;
+*/
+
+    $sth = $pdo->prepare('SELECT NumberTries FROM Users WHERE UserID = :id');
+    $sth->bindValue(':NumberTries', 1 , PDO::PARAM_INT);
+    $sth->execute();
+    $row = $sth->fetch(PDO::FETCH_ASSOC);
+
+    /*
+    "UPDATE Users SET NumberTries = $currentNumberOfTries WHERE UserName = '$currentUserName'";
+    */
 }
 
 ///////////////////////
@@ -98,6 +125,7 @@ if (isset($_POST['login'])) {
 
     if (!empty($_POST['logusername'])) {
         $UserName = $_POST['logusername'];
+        $_SESSION['CurrentUserName'] =  $UserName;
     } else {
         echo 'Username Missing';
         echo "<script>alert('Titel Missing')</script> ";
@@ -140,9 +168,10 @@ if (isset($_POST['login'])) {
             $_SESSION['WrongAnswers'] = 0;
             $_SESSION['Q' . $questNum] = '';
             $_SESSION['UserLoggedIn'] = true;
-            if($_SESSION['QuestionNumber'] == 0)
+            if($_SESSION['QuestionNumber'] == 0);
             {
             loadDifficulty();
+            //addTry();
             }
             
         } else {

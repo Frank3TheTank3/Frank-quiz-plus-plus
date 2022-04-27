@@ -51,6 +51,10 @@
                         <h1>Try Again</h1>
                     </button>
                     <script src="../js/func.js"></script>
+                    <?php 
+                    include_once('questions.php');
+                    showScore();
+                    ?>;
 
 
                 </div>

@@ -35,6 +35,7 @@ function loadDifficulty()
 function loadQuestion()
 
 {
+    echo "<div class='d-none' id='time'>" . $_SESSION['Delay'] . "</div>";
     //Toggle User login & Create Timebar
     echo '<script>toggleUserDisplay();</script>';
     createTimebar();

@@ -120,16 +120,19 @@ if (isset($_POST['login'])) {
             echo '<div class="container  p-5 my-5 bg-primary text-white ">';
             echo '<h1 class="text-center text-white ">Welcome ' . $userpassName . ' </h1>';
             echo '</div>';
-            $_SESSION['QuestionNumber'] = 1;
+
+            $_SESSION['QuestionNumber'] = 0;
             $questNum = $_SESSION['QuestionNumber'];
             $_SESSION['Correct'] = '';
             $_SESSION['CorrectAnswers'] = 0;
             $_SESSION['WrongAnswers'] = 0;
             $_SESSION['Q' . $questNum] = '';
+            $_SESSION['UserLoggedIn'] = true;
+            if($_SESSION['QuestionNumber'] == 0)
+            {
+            loadDifficulty();
+            }
             
-            require_once('questions.php');
-            loadQuestion();
-            loadAnswer();
             //showQuestionsAndAnswers();
             
         } else {

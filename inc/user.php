@@ -66,14 +66,16 @@ if (isset($_POST['adduser'])) {
         $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
 
         //Get last userID in Table
+        /*
         $stmt = $pdo->query("SELECT * FROM Users ORDER BY UserID DESC LIMIT 1");
         $user = $stmt->fetch();
         $_SESSION['CurrentUserID'] = $user['UserID'];
        
-
+        */
+        
         //Create Insert with new user
-        $sql = 'INSERT INTO Users(UserID, UserName, UserPW, UserStatus, NumberTries, Highscore) 
-        VALUES(:userid, :username, :userpw, :status, :numbertries, :highscore)';
+        $sql = 'INSERT INTO Users(UserID, UserName, UserPW, UserStatus) 
+        VALUES(:userid, :username, :userpw, :userstatus)';
 
         $statement = $pdo->prepare($sql);
 
@@ -81,9 +83,7 @@ if (isset($_POST['adduser'])) {
             ':userid' => $pdo->lastInsertId(),
             ':username' => $UserName,
             ':userpw' => $UserPW,
-            ':status' => 'open',
-            ':numertries' => 0,
-            ':highscore' => 0
+            ':userstatus' => 'open'
         ]);
 
         $publisher_id = $pdo->lastInsertId();
@@ -104,6 +104,7 @@ function addTry()
     $user = $stmt->fetch();
     $currentNumberOfTries = $user['NumberTries'] +1;
     echo $currentNumberOfTries;
+    
 */
 
     $sth = $pdo->prepare('SELECT NumberTries FROM Users WHERE UserID = :id');

@@ -28,6 +28,23 @@ if (isset($_POST['reguser'])) {
 if (isset($_POST['quicklogin'])) {
     quickLogIn();
 }
+if (isset($_POST['tryagain'])) {
+    unset($_POST);
+    $_POST = array();
+    session_unset();
+    $_SESSION['QuestionNumber'] = 0;
+    $questNum = $_SESSION['QuestionNumber'];
+    $_SESSION['Correct'] = '';
+    $_SESSION['CorrectAnswers'] = 0;
+    $_SESSION['WrongAnswers'] = 0;
+    $_SESSION['Q' . $questNum] = '';
+    $_SESSION['UserLoggedIn'] = true;
+    if($_SESSION['QuestionNumber'] == 0);
+    {
+    loadDifficulty();
+    //addTry();
+    }
+}
 
 
 
@@ -182,7 +199,7 @@ if (isset($_POST['login'])) {
         //Username Check
         if ($userpassPW == $UserPW) {
 
-            
+            quickLogIn();
             
         } else {
             echo "Wrong Password ";

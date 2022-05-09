@@ -37,9 +37,8 @@ function loadQuestion()
 {
     echo "<div class='d-none' id='time'>" . $_SESSION['Delay'] . "</div>";
     //Toggle User login & Create Timebar
-    echo '<script>toggleUserDisplay();</script>';
     createTimebar();
-   
+
 
     $questionNum = $_SESSION['QuestionNumber'];
 
@@ -94,26 +93,26 @@ function loadAnswer()
     $sql_Answer = "SELECT * FROM QnA WHERE QnA.QID = $answerNum";
     $result = $pdo_Answer->query($sql_Answer);
 
-    
+
 
     echo "<form method='post'>";
     foreach ($result  as $row) {
         $answerString = $row['ANSWERS'];
-        $str_arr = preg_split ("/\,/", $answerString);
+        $str_arr = preg_split("/\,/", $answerString);
 
         if ($row['ANSWERS']) {
 
             echo "<input class='rounded-pill d-flex align-items-center justify-content-center container 
- p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $str_arr [0] . "'></input>";
-       
+ p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $str_arr[0] . "'></input>";
+
             echo "<input class='rounded-pill d-flex align-items-center justify-content-center container 
-            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $str_arr [1]  . "'></input>";
-     
+            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $str_arr[1]  . "'></input>";
+
             echo "<input class='rounded-pill d-flex align-items-center justify-content-center container 
-            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $str_arr [2]  . "'></input>";
-        
+            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $str_arr[2]  . "'></input>";
+
             echo "<input class='rounded-pill d-flex align-items-center justify-content-center container 
-            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" .  $str_arr [3] . "'></input>";
+            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" .  $str_arr[3] . "'></input>";
         }
 
         if ($row['CORRECT']) {
@@ -134,6 +133,18 @@ function loadAnswer()
 
 function showQuestionsAndAnswers()
 {
+    echo "<div class='d-flex m-4 justify-content-center'>";
+    echo "
+        <form method='post'>
+        <input class='btn btn-danger m-4' type='submit' name='reset' id='reset' value='Log-Out'></input>
+                </form>";
+
+    echo "
+        <form method='post'>
+                <input class='btn btn-success m-4' type='submit' name='tryagain' id='tryagain' value='Try again'></input>
+                </form>";
+    echo '</div>';
+
     echo '<script>toggleUserDisplay();</script>';
     showScore();
     $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
@@ -142,7 +153,7 @@ function showQuestionsAndAnswers()
     echo "<table width='fit-content' ><tr>";
     echo '<th>Question Number</th>';
     echo '<th>Question</th>';
-  
+
     echo '<th>Given Answer</th>';
     echo '<th>Correct Answer</th>';
     $givenQuestIndex = 1;
@@ -155,16 +166,8 @@ function showQuestionsAndAnswers()
         echo '</tr>';
         $givenQuestIndex++;
     }
+    echo '</tr>';
     echo '</div>';
-
-    /* Further Stats from the Answer Database - not in use
-        echo '<td>' . $row['Status'] . '</td>';
-        echo '<td>' . $row['Answer_A'] . '</td>';
-        echo '<td>' . $row['Answer_B'] . '</td>';
-        echo '<td>' . $row['Answer_C'] . '</td>';
-        echo '<td>' . $row['Answer_D'] . '</td>';
-        */
-    
 }
 
 /////////////////////////////
@@ -176,6 +179,6 @@ function showScore()
 {
 
     echo "<div class='d-flex m-4 justify-content-center'>";
-    echo "<h1> Final Score:" . $_SESSION['CorrectAnswers'] ."</h1> ";
+    echo "<h1> Final Score:<br>  " . $_SESSION['CorrectAnswers'] . " Points</h1> ";
     echo '</div>';
 }

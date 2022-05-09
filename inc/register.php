@@ -7,7 +7,7 @@ echo ("<section id='userreg'>
         <form method='post'>
         <h1 class='text-center'>Register</h1>
         <!-- Add User -->
-        <div class='rounded-pill d-flex align-items-center justify-content-center container  p-5 my-5 bg-dark text-white'>
+        <div class='rounded-pill bg-dark d-flex align-items-center justify-content-center container  p-5 my-5 text-white'>
             <label for='username'> Username:</label>
             <input class='btn btn-light m-4' type='text' name='username' id='username' value=''></input>
             <label for='userpw'> Password:</label>

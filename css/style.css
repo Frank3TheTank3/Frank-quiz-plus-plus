@@ -90,6 +90,12 @@ section {
 
 }
 
+.opacblack{
+    background-color: black;
+    opacity: 0.8;
+
+}
+
 #navcontainer {
 
   

@@ -25,12 +25,20 @@ if (isset($_POST['reguser'])) {
     showReg();
 }
 
+if (isset($_POST['quicklogin'])) {
+    quickLogIn();
+}
+
+
 
 /*Open Users Database Button*/
 if (isset($_POST['goUsers'])) {
 
     showAllUsers();
 }
+
+
+
 
 ////////////////////////////////
 /////*SHOW ALL USERS*///////////
@@ -40,8 +48,12 @@ if (isset($_POST['goUsers'])) {
 function showAllUsers()
 {
     $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
-    $sql = "SELECT * FROM User";
-    foreach ($pdo->query($sql) as $row) {
+    //$sql = "SELECT * FROM User";
+
+    $sql = $pdo->query("SELECT * FROM User ORDER BY UID DESC LIMIT 1");
+    $row = $sql->fetch();
+
+    //foreach ($pdo->query($sql) as $row) {
         echo '<div class="container  p-5 my-5 bg-success text-white ">';
         echo "Identification Number: " . $row['UID'] . "<br />";
         echo "User Name: " .$row['NAME'] . "<br />";
@@ -50,7 +62,11 @@ function showAllUsers()
         echo "Your Highscore: " .$row['HIGHSCORE'] . "<br/>";
         echo "Number of Tries: " .$row['TRIES'] . "<br />";
         echo '</div>';
-    }
+        echo "
+        <form method='post'>
+                <input class='btn btn-success m-4' type='submit' name='quicklogin' id='quicklogin' value='Direct Log-In'></input>
+                </form>";
+    //}
 }
 
 /////////////////////////////
@@ -70,6 +86,7 @@ if (isset($_POST['adduser'])) {
     }
     if (!empty($_POST['userpw'])) {
         $UserPW = $_POST['userpw'];
+        $_SESSION['CurrentUserPw'] = $UserPW;
     } else {
         echo 'Titel Missing';
         echo "<script>alert('Password Missing')</script> ";
@@ -165,8 +182,20 @@ if (isset($_POST['login'])) {
         //Username Check
         if ($userpassPW == $UserPW) {
 
-            echo '<div class="container  p-5 my-5 bg-primary text-white ">';
-            echo '<h1 class="text-center text-white ">Welcome ' . $userpassName . ' </h1>';
+            
+            
+        } else {
+            echo "Wrong Password ";
+            echo "<script>alert('Passwort not correct')</script> ";
+        }
+    }
+}
+
+function quickLogIn()
+{
+
+    echo '<div class="container  p-5 my-5 bg-primary text-white ">';
+            echo '<h1 class="text-center text-white ">Welcome ' . $_SESSION['CurrentUserName'] . ' </h1>';
             echo '</div>';
 
             //Load Main Variables & Show Difficulties
@@ -182,15 +211,7 @@ if (isset($_POST['login'])) {
             loadDifficulty();
             //addTry();
             }
-            
-        } else {
-            echo "Wrong Password ";
-            echo "<script>alert('Passwort not correct')</script> ";
-        }
-    }
 }
-
-
 
         //Get last userID in Table
         /*

@@ -33,7 +33,9 @@
 
                 <!--- Logout Button --->
                 <form method="post">
-                    <input class='btn btn-primary m-4' type='submit' name='reset' id='reset' value='Logout'></input>
+                <input class='btn btn-primary m-4' type='submit' name='reguser' id='reguser' value='Register'></input>
+                <input class='btn btn-success m-4' type='submit' name='loguser' id='loguser' value='Log-In'></input>
+                    <input class='btn btn-danger m-4' type='submit' name='reset' id='reset' value='Log-Out'></input>
                 </form>
 
 
@@ -75,34 +77,11 @@
                     <h1 class="text-white display-4">Frank Quiz ++</h1>
                     <p class="text-white"> The most adventurous quiz you ever took!
                     </p>
-                    <section id="logreg">
-                        <form method="post">
-                            <h1 class="text-center">Register</h1>
-                            <!-- Add User -->
-                            <div class='rounded-pill d-flex align-items-center justify-content-center container  p-5 my-5 bg-success text-white'>
-                                <label for="username"> Username:</label>
-                                <input class='btn btn-light m-4' type='text' name='username' id='username' value=''></input>
-                                <label for="userpw"> Password:</label>
-                                <input class='btn btn-light m-4' type='password' name='userpw' id='userpw' value=''></input>
-                                <input class='btn btn-light m-4' type='submit' name='adduser' id='adduser' value='Register'></input>
-                            </div>
-                        </form>
-                        <form method="post">
-                            <h1 class="text-center">Log-In</h1>
-                            <!-- Login User -->
-                            <div class='rounded-pill d-flex align-items-center justify-content-center container  p-5 my-5 bg-dark text-white'>
-                                <label for="logusername"> Username:</label>
-                                <input class='btn btn-primary m-4' type='text' name='logusername' id='logusername' value=''></input>
-                                <label for="loguserpw"> Password:</label>
-                                <input class='btn btn-primary m-4' type='password' name='loguserpw' id='loguserpw' value=''></input>
-                                <input class='btn btn-primary m-4' type='submit' name='login' id='login' value='Login'></input>
-                            </div>
-                        </form>
-                    </section>
-
+                    
 
                     <!--- Main includes for questions / user & submit checker --->
                     <?php
+                    include('register.php');
                     include('questions.php');
                     include('user.php');
                     include('checker.php');

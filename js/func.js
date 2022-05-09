@@ -1,7 +1,18 @@
-function toggleUserDisplay()
+
+
+
+function toggleLoginDisplay()
 {
-    var element = document.getElementById('logreg');
-    element.classList.add('d-none');
+    var logelement = document.getElementById('userlog');
+    logelement.classList.add('d-none');
+
+
+}
+
+function toggleRegisterDisplay()
+{
+    var regelement = document.getElementById('userreg');
+    regelement.classList.add('d-none');
 
 
 }

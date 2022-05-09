@@ -44,18 +44,18 @@ function loadQuestion()
     $questionNum = $_SESSION['QuestionNumber'];
 
     $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
-    $sql4 = "SELECT * FROM Questions WHERE Questions.QuestionIndex = $questionNum";
+    $sql4 = "SELECT * FROM QnA WHERE QnA.QID = $questionNum";
     $result = $pdo->query($sql4);
 
     foreach ($result  as $row) {
         echo "<div id='questions' class='rounded-pill d-flex align-items-center justify-content-center container 
  p-5 my-5 bg-dark text-white'>";
-        echo $row['Question'];
+        echo $row['QUESTION'];
         echo "</div>";
         echo "<style>
         #home {
             width:100%; height:100%;
-            background-image: url(imgs/questimgs/" . $row['ImageName'] . ");
+            background-image: url(imgs/questimgs/P" . $questionNum . ".jpg);
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover; 
@@ -91,29 +91,33 @@ function loadAnswer()
 {
     $answerNum = $_SESSION['QuestionNumber'];
     $pdo_Answer = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
-    $sql_Answer = "SELECT * FROM Answers WHERE Answers.QuestionIndex = $answerNum";
+    $sql_Answer = "SELECT * FROM QnA WHERE QnA.QID = $answerNum";
     $result = $pdo_Answer->query($sql_Answer);
+
+    
+
     echo "<form method='post'>";
     foreach ($result  as $row) {
-        if ($row['Answer_A']) {
+        $answerString = $row['ANSWERS'];
+        $str_arr = preg_split ("/\,/", $answerString);
+
+        if ($row['ANSWERS']) {
+
             echo "<input class='rounded-pill d-flex align-items-center justify-content-center container 
- p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $row['Answer_A'] . "'></input>";
-        }
-        if ($row['Answer_B']) {
+ p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $str_arr [0] . "'></input>";
+       
             echo "<input class='rounded-pill d-flex align-items-center justify-content-center container 
-            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $row['Answer_B'] . "'></input>";
-        }
-        if ($row['Answer_C']) {
+            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $str_arr [1]  . "'></input>";
+     
             echo "<input class='rounded-pill d-flex align-items-center justify-content-center container 
-            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $row['Answer_C'] . "'></input>";
-        }
-        if ($row['Answer_D']) {
+            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $str_arr [2]  . "'></input>";
+        
             echo "<input class='rounded-pill d-flex align-items-center justify-content-center container 
-            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" . $row['Answer_D'] . "'></input>";
+            p-5 my-5 text-white' type='submit' name='answer' id='answer' value='" .  $str_arr [3] . "'></input>";
         }
 
-        if ($row['CorrectAnswer']) {
-            $_SESSION['Correct'] = $row['CorrectAnswer'];
+        if ($row['CORRECT']) {
+            $_SESSION['Correct'] = $row['CORRECT'];
         }
     }
     echo "</form>";
@@ -133,7 +137,7 @@ function showQuestionsAndAnswers()
     echo '<script>toggleUserDisplay();</script>';
     showScore();
     $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
-    $sql3 = "SELECT * FROM Questions, Answers WHERE Questions.QuestionIndex = Answers.QuestionIndex";
+    $sql3 = "SELECT * FROM QnA";
     echo "<div class='d-flex m-4 justify-content-center'>";
     echo "<table width='fit-content' ><tr>";
     echo '<th>Question Number</th>';
@@ -144,10 +148,10 @@ function showQuestionsAndAnswers()
     $givenQuestIndex = 1;
     foreach ($pdo->query($sql3) as $row) {
         echo '<tr>';
-        echo '<td>' . 'No. ' . $row['QuestionIndex'] . '</td>';
-        echo '<td>' . $row['Question'] . '</td>';
+        echo '<td>' . 'No. ' . $row['QID'] . '</td>';
+        echo '<td>' . $row['QUESTION'] . '</td>';
         echo '<td>' . $_SESSION['Q' . $givenQuestIndex] . '</td>';
-        echo '<td>' . $row['CorrectAnswer'] . '</td>';
+        echo '<td>' . $row['CORRECT'] . '</td>';
         echo '</tr>';
         $givenQuestIndex++;
     }

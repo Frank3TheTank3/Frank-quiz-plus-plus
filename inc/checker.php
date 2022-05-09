@@ -62,7 +62,7 @@ if (isset($_POST['answer'])) {
     }
 
     //End of the Quiz
-    if ($_SESSION['QuestionNumber'] == 14) {
+    if ($_SESSION['QuestionNumber'] == 10) {
         showQuestionsAndAnswers();
     } 
 

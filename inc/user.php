@@ -15,6 +15,17 @@ if (isset($_POST['reset'])) {
     $_SESSION['QuestionNumber'] = 1;
 }
 
+if (isset($_POST['loguser'])) {
+   
+    showLog();
+}
+
+
+if (isset($_POST['reguser'])) {
+    showReg();
+}
+
+
 /*Open Users Database Button*/
 if (isset($_POST['goUsers'])) {
 
@@ -29,13 +40,15 @@ if (isset($_POST['goUsers'])) {
 function showAllUsers()
 {
     $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
-    $sql = "SELECT * FROM Users";
+    $sql = "SELECT * FROM User";
     foreach ($pdo->query($sql) as $row) {
-        echo '<div class="container  p-5 my-5 bg-primary text-white ">';
-        echo $row['UserID'] . "<br />";
-        echo $row['UserName'] . "<br />";
-        echo $row['UserPW'] . "<br /><br />";
-        echo $row['UserStatus'] . "<br /><br />";
+        echo '<div class="container  p-5 my-5 bg-success text-white ">';
+        echo "Identification Number: " . $row['UID'] . "<br />";
+        echo "User Name: " .$row['NAME'] . "<br />";
+        echo "User Password: " .$row['PW'] . "<br />";
+        echo "Status: " .$row['STATUS'] . "<br />";
+        echo "Your Highscore: " .$row['HIGHSCORE'] . "<br/>";
+        echo "Number of Tries: " .$row['TRIES'] . "<br />";
         echo '</div>';
     }
 }
@@ -65,17 +78,10 @@ if (isset($_POST['adduser'])) {
 
         $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
 
-        //Get last userID in Table
-        /*
-        $stmt = $pdo->query("SELECT * FROM Users ORDER BY UserID DESC LIMIT 1");
-        $user = $stmt->fetch();
-        $_SESSION['CurrentUserID'] = $user['UserID'];
-       
-        */
         
         //Create Insert with new user
-        $sql = 'INSERT INTO Users(UserID, UserName, UserPW, UserStatus) 
-        VALUES(:userid, :username, :userpw, :userstatus)';
+        $sql = 'INSERT INTO User(UID, NAME, PW, STATUS, HIGHSCORE, TRIES) 
+        VALUES(:userid, :username, :userpw, :userstatus, :highscore, :tries)';
 
         $statement = $pdo->prepare($sql);
 
@@ -83,7 +89,9 @@ if (isset($_POST['adduser'])) {
             ':userid' => $pdo->lastInsertId(),
             ':username' => $UserName,
             ':userpw' => $UserPW,
-            ':userstatus' => 'open'
+            ':userstatus' => 'open',
+            ':highscore' => 0,
+            ':tries' => 0
         ]);
 
         $publisher_id = $pdo->lastInsertId();
@@ -143,15 +151,15 @@ if (isset($_POST['login'])) {
 
     /*Select UserName from Users Database*/
     $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
-    $stmt = $pdo->query("SELECT * FROM Users WHERE UserName = '$UserName'");
+    $stmt = $pdo->query("SELECT * FROM User WHERE NAME = '$UserName'");
     $userLoginData = $stmt->fetch();
     if ($userLoginData == null) {
         echo "Wrong Username ";
         echo "<script>alert('Username not correct')</script> ";
     } else {
 
-        $userpassName = $userLoginData['UserName'];
-        $userpassPW = $userLoginData['UserPW'];
+        $userpassName = $userLoginData['NAME'];
+        $userpassPW = $userLoginData['PW'];
         $publisher_id = $pdo->lastInsertId();
 
         //Username Check
@@ -181,3 +189,13 @@ if (isset($_POST['login'])) {
         }
     }
 }
+
+
+
+        //Get last userID in Table
+        /*
+        $stmt = $pdo->query("SELECT * FROM Users ORDER BY UserID DESC LIMIT 1");
+        $user = $stmt->fetch();
+        $_SESSION['CurrentUserID'] = $user['UserID'];
+       
+        */

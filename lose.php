@@ -7,6 +7,3 @@ include("inc/header.php");
 include("inc/losebody.php");
 ?>
 </body>
-<?php
-include("inc/footer.php");
-?>

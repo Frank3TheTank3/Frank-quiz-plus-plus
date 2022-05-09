@@ -69,7 +69,7 @@ function showAllUsers()
 
     $sql = $pdo->query("SELECT * FROM User ORDER BY UID DESC LIMIT 1");
     $row = $sql->fetch();
-
+    $_SESSION['CurrentNumberTries'] = $row['TRIES'];
     //foreach ($pdo->query($sql) as $row) {
         echo '<div class="container  p-5 my-5 bg-success text-white ">';
         echo "Identification Number: " . $row['UID'] . "<br />";
@@ -137,26 +137,13 @@ if (isset($_POST['adduser'])) {
 
 function addTry()
 {
-    $currentUserName = $_SESSION['CurrentUserName'];
     $pdo = new PDO('mysql:host=mysql;dbname=library', 'webDev', 'opport2022');
 
-    //Get last userID in Table
-    /*
-    $stmt = $pdo->query("SELECT * FROM Users WHERE UserName = $currentUserName");
-    $user = $stmt->fetch();
-    $currentNumberOfTries = $user['NumberTries'] +1;
-    echo $currentNumberOfTries;
-    
-*/
+    $passuname = $_SESSION['CurrentUserName'];
+    $passTriesNumber = $_SESSION['CurrentNumberTries'] + 1;
 
-    $sth = $pdo->prepare('SELECT NumberTries FROM Users WHERE UserID = :id');
-    $sth->bindValue(':NumberTries', 1 , PDO::PARAM_INT);
-    $sth->execute();
-    $row = $sth->fetch(PDO::FETCH_ASSOC);
-
-    /*
-    "UPDATE Users SET NumberTries = $currentNumberOfTries WHERE UserName = '$currentUserName'";
-    */
+    $stmt = $pdo->prepare("UPDATE User SET TRIES = ".$passTriesNumber." WHERE NAME = '$passuname'");
+    $stmt->execute();
 }
 
 ///////////////////////
@@ -194,6 +181,7 @@ if (isset($_POST['login'])) {
 
         $userpassName = $userLoginData['NAME'];
         $userpassPW = $userLoginData['PW'];
+        $_SESSION['CurrentNumberTries'] = $userLoginData['TRIES'];
         $publisher_id = $pdo->lastInsertId();
 
         //Username Check
@@ -226,7 +214,7 @@ function quickLogIn()
             if($_SESSION['QuestionNumber'] == 0);
             {
             loadDifficulty();
-            //addTry();
+            addTry();
             }
 }
 

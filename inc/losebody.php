@@ -48,7 +48,7 @@
                     <h1 class="text-white display-4">YOU LOSE</h1>
                     <button onclick="backToMenu()" class='bg-success rounded-pill d-flex align-items-center justify-content-center container 
  p-5 my-5 text-white' name='restart' id='restart'>
-                        <h1>Try Again</h1>
+                        <h1>Back To Menu</h1>
                     </button>
                     <script src="../js/func.js"></script>
                     <?php 
@@ -56,7 +56,7 @@
                     showScore();
                     ?>;
 
-
+                    <img src="../imgs/bumb.gif" alt="">
                 </div>
 
 
